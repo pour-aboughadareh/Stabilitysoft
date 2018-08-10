@@ -349,7 +349,7 @@ First, you need to convert your data to a dataframe (given that the data is alre
 ### Option 1: Copy data from your favorite app and get it from clipboard
 
 #### 1. Copy data as table in your favorite app
-![Copying table data from excel](Screenshot 1.jpg)
+![Copying table data from excel](https://raw.githubusercontent.com/pour-aboughadareh/Stabilitysoft/master/Screenshot%201.jpg)
 
 #### 2. Execute the followin command in your RStudio console
 ```R
