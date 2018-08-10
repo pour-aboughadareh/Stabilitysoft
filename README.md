@@ -1,7 +1,7 @@
 How to use STABILITYSOFT in R
 ================================================
 
-STABILITYSOFT calculates the several parametric and non-parametric statistics as defined in STABILITYSOFT: a new online program to calculate parametric and non-parametric stability statistics. ?????????????? (submitted).
+STABILITYSOFT calculates the several parametric and non-parametric statistics as defined in STABILITYSOFT: a new online program to calculate parametric and non-parametric stability statistics. Applications in Plant Sciences (submitted).
 
 Step 1: loading the library
 --------------------------
