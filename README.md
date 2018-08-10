@@ -1,13 +1,33 @@
 How to use STABILITYSOFT in R
 ================================================
 
-STABILITYSOFT calculates the several parametric and non-parametric statistics as defined in STABILITYSOFT: a new online program to calculate parametric and non-parametric stability statistics. Applications in Plant Sciences (submitted).
+STABILITYSOFT calculates the several parametric and non-parametric statistics as defined in STABILITYSOFT: a new online program to calculate parametric and non-parametric stability statistics. ?????????????? (submitted).
 
 Step 1: loading the library
 --------------------------
 To get started, execute the library code ([STABILITYSOFT.R](STABILITYSOFT.R)) in your RStudio console.
 
 ```R
+##########################
+##
+##   STABILITYSOFT: a new online program to calculate parametric and non-parametric stability statistics
+##   
+##   Authors:
+##   Alireza Pour-Aboughadareh (a.poraboghadareh@gmail.com)
+##   Mohsen Yousefian (contact@mohsenyousefian.com)
+##
+##########################
+##
+##   Usage:
+##
+##
+##   1. load table data to a dataframe variable named "df"
+##   2. results <- Calculate(df)
+##   3. print(out$statistics)
+##   4. print(out$ranks)
+##
+##########################
+
 (init <- function()
 {
     BPJ <- function(a, b, pureMatBPJ, pureMatAvgCol, pureMatTotalAvg)
@@ -310,7 +330,7 @@ To get started, execute the library code ([STABILITYSOFT.R](STABILITYSOFT.R)) in
         PaP <- PaP(a, b, pureMatShu)
 
         stats_df <- data.frame(table_original[, 1], Y, s1, z1, s2, z2, s3, s6, np1, np2, np3, np4, ShuklaEquvalance[, 1], ShuklaEquvalance[, 2], SDI, BI, CVR, P, PaP, Kang)
-        colnames(stats_df) <- c("Genotype", "Y", "S1", "Z1", "S2", "Z2", "S3", "S6", "NP1", "NP2", "NP3", "NP4", "Wri", "Shu", "Sd", "bFW", "CV", "Pla", "Pla & Pet", "Kang")
+        colnames(stats_df) <- c("Genotype", "Y", "S1", "Z1", "S2", "Z2", "S3", "S6", "NP1", "NP2", "NP3", "NP4", "Wricke’s ecovalence", "Shukla’s stability variance", "Deviation from regression", "Regression coefficient", "Coefficient of variance", "GE variance component", "Mean variance component", "Kang’s rank-sum")
 
         ranks_df <- getranks_df(a, b, stats_df)
 
