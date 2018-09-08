@@ -23,8 +23,8 @@ To get started, execute the library code ([STABILITYSOFT.R](STABILITYSOFT.R)) in
 ##
 ##   1. load table data to a dataframe variable named "df"
 ##   2. results <- Calculate(df)
-##   3. print(out$statistics)
-##   4. print(out$ranks)
+##   3. print(results$statistics)
+##   4. print(results$ranks)
 ##
 ##########################
 
