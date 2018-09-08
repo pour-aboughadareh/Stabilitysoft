@@ -351,7 +351,7 @@ First, you need to convert your data to a dataframe (given that the data is alre
 #### 1. Copy data as table in your favorite app
 ![Copying table data from excel](https://raw.githubusercontent.com/pour-aboughadareh/Stabilitysoft/master/Screenshot%201.jpg)
 
-#### 2. Execute the followin command in your RStudio console
+#### 2. Execute the following command in your RStudio console
 ```R
 df <- read.delim("clipboard")
 ```
