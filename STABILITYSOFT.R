@@ -13,8 +13,8 @@
 ##
 ##   1. load table data to a dataframe variable named "df"
 ##   2. results <- Calculate(df)
-##   3. print(out$statistics)
-##   4. print(out$ranks)
+##   3. print(results$statistics)
+##   4. print(results$ranks)
 ##
 ##########################
 
@@ -320,7 +320,7 @@
         PaP <- PaP(a, b, pureMatShu)
 
         stats_df <- data.frame(table_original[, 1], Y, s1, z1, s2, z2, s3, s6, np1, np2, np3, np4, ShuklaEquvalance[, 1], ShuklaEquvalance[, 2], SDI, BI, CVR, P, PaP, Kang)
-        colnames(stats_df) <- c("Genotype", "Y", "S1", "Z1", "S2", "Z2", "S3", "S6", "NP1", "NP2", "NP3", "NP4", "Wricke’s ecovalence", "Shukla’s stability variance", "Deviation from regression", "Regression coefficient", "Coefficient of variance", "GE variance component", "Mean variance component", "Kang’s rank-sum")
+        colnames(stats_df) <- c("Genotype", "Y", "S1", "Z1", "S2", "Z2", "S3", "S6", "NP1", "NP2", "NP3", "NP4", "WrickeÂ’s ecovalence", "ShuklaÂ’s stability variance", "Deviation from regression", "Regression coefficient", "Coefficient of variance", "GE variance component", "Mean variance component", "KangÂ’s rank-sum")
 
         ranks_df <- getranks_df(a, b, stats_df)
 
