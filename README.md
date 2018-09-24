@@ -3,7 +3,7 @@ How to use STABILITYSOFT in R
 
 STABILITYSOFT calculates the several parametric and non-parametric statistics as defined in STABILITYSOFT: a new online program to calculate parametric and non-parametric stability statistics. Applications in Plant Sciences (submitted).
 
-Step 1: loading the library
+Step 1: Loading the library
 --------------------------
 To get started, execute the library code ([STABILITYSOFT.R](STABILITYSOFT.R)) in your RStudio console.
 
@@ -339,7 +339,7 @@ To get started, execute the library code ([STABILITYSOFT.R](STABILITYSOFT.R)) in
     }
 })()
 ```
-Step 2: loading the data
+Step 2: Loading the data
 --------------------
 After execution, function `Calculator` can be used to get the results.
 It takes a input as dataframe and returns the result as a dataframe containing `result$statistics` and `result$ranks`.
@@ -371,7 +371,7 @@ library("XLConnect")
 df <- readWorksheetFromFile("<Path to .xlsx file>", sheet=1)
 ```
 
-Step 3: getting the results
+Step 3: Getting the results
 -------------------
 The table data in `df` variable should now look like the following:
 ```R
