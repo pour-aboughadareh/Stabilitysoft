@@ -342,7 +342,7 @@ To get started, execute the library code ([STABILITYSOFT.R](STABILITYSOFT.R)) in
 Step 2: Loading the data
 --------------------
 After execution, function `Calculator` can be used to get the results.
-It takes a input as dataframe and returns the result as a dataframe containing `result$statistics` and `result$ranks`.
+It takes a dataframe as input and returns the result as an object containing dataframes `result$statistics` and `result$ranks`.
 
 First, you need to convert your data to a dataframe (given that the data is already like examples provided [here](Examples.zip)).
 
