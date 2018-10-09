@@ -334,7 +334,7 @@ To get started, execute the library code ([STABILITYSOFT.R](STABILITYSOFT.R)) in
 
         ranks_df <- getranks_df(a, b, stats_df)
 
-        output <- list(statistics = stats_df, ranks = ranks_df, correlation = cor(data.matrix(stats_df[-1][, 1:length(stats_df[-1])])))
+        output <- list(statistics = stats_df, ranks = ranks_df, correlation_matrix = cor(data.matrix(stats_df[-1][, 1:length(stats_df[-1])])))
         return(output)
     }
 })()
