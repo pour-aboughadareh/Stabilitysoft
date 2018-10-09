@@ -71,13 +71,13 @@ To get started, execute the library code ([STABILITYSOFT.R](STABILITYSOFT.R)) in
         output <- (2 / (b * (b - 1))) * (sum / rankAvgO)
         return(output)
     }
-    ShuklaEquvalance <- function(a, b, pureMatShu)
+    ShuklaEquivalance <- function(a, b, pureMatShu)
     {
-        equvalance <- apply(pureMatShu, 1, sum)
-        equvalanceTotal <- sum(pureMatShu)
+        equivalance <- apply(pureMatShu, 1, sum)
+        equivalanceTotal <- sum(pureMatShu)
         output <- matrix(nrow = a, ncol = 2)
-        shukla <- ((a * equvalance) / ((b - 1) * (a - 2))) - ((equvalanceTotal) / ((a - 1) * (a - 2) * (b - 1)))
-        output[, 1] <- equvalance
+        shukla <- ((a * equivalance) / ((b - 1) * (a - 2))) - ((equivalanceTotal) / ((a - 1) * (a - 2) * (b - 1)))
+        output[, 1] <- equivalance
         output[, 2] <- shukla
         return(output)
     }
@@ -170,10 +170,10 @@ To get started, execute the library code ([STABILITYSOFT.R](STABILITYSOFT.R)) in
     }
     Kang <- function(a, b, pureMatShu, PureMatAvg)
     {
-        equvalance <- apply(pureMatShu, 1, sum)
-        equvalanceTotal <- sum(equvalance)
+        equivalance <- apply(pureMatShu, 1, sum)
+        equivalanceTotal <- sum(equivalance)
 
-        shukla <- ((a * equvalance) / ((b - 1) * (a - 2))) - ((equvalanceTotal) / ((a - 1) * (a - 2) * (b - 1)))
+        shukla <- ((a * equivalance) / ((b - 1) * (a - 2))) - ((equivalanceTotal) / ((a - 1) * (a - 2) * (b - 1)))
 
         rankAvgR <- vector()
         tmp <- sort(PureMatAvg)
@@ -202,20 +202,20 @@ To get started, execute the library code ([STABILITYSOFT.R](STABILITYSOFT.R)) in
     }
     P <- function(a, b, pureMatShu)
     {
-        equvalance <- apply(pureMatShu, 1, sum)
-        equvalanceTotal <- sum(equvalance)
+        equivalance <- apply(pureMatShu, 1, sum)
+        equivalanceTotal <- sum(equivalance)
 
-        shukla <- (((-1 * a) * equvalance) / ((b - 1) * (a - 2) * (a - 1))) + ((equvalanceTotal) / ((a - 2) * (b - 1)))
+        shukla <- (((-1 * a) * equivalance) / ((b - 1) * (a - 2) * (a - 1))) + ((equivalanceTotal) / ((a - 2) * (b - 1)))
 
         output <- shukla
         return(output)
     }
     PaP <- function(a, b, pureMatShu)
     {
-        equvalance <- apply(pureMatShu, 1, sum)
-        equvalanceTotal <- sum(equvalance)
+        equivalance <- apply(pureMatShu, 1, sum)
+        equivalanceTotal <- sum(equivalance)
 
-        shukla <- ((a * equvalance) / (2 * (b - 1) * (a - 1))) + ((equvalanceTotal) / (2 * (a - 2) * (b - 1)))
+        shukla <- ((a * equivalance) / (2 * (b - 1) * (a - 1))) + ((equivalanceTotal) / (2 * (a - 2) * (b - 1)))
 
         output <- shukla
         return(output)
@@ -315,7 +315,7 @@ To get started, execute the library code ([STABILITYSOFT.R](STABILITYSOFT.R)) in
         s3 <- s3(a, b, mat, matAvg)
         s6 <- s6(a, b, mat, matAvg)
 
-        ShuklaEquvalance <- ShuklaEquvalance(a, b, pureMatShu) # wri Shu
+        ShuklaEquivalance <- ShuklaEquivalance(a, b, pureMatShu) # wri Shu
 
         SDI <- SDI(a, b, pureMatSDI, pureMatAvgCol, pureMatTotalAvg, pureMatBI)
 
@@ -329,12 +329,12 @@ To get started, execute the library code ([STABILITYSOFT.R](STABILITYSOFT.R)) in
 
         PaP <- PaP(a, b, pureMatShu)
 
-        stats_df <- data.frame(table_original[, 1], Y, s1, z1, s2, z2, s3, s6, np1, np2, np3, np4, ShuklaEquvalance[, 1], ShuklaEquvalance[, 2], SDI, BI, CVR, P, PaP, Kang)
+        stats_df <- data.frame(table_original[, 1], Y, s1, z1, s2, z2, s3, s6, np1, np2, np3, np4, ShuklaEquivalance[, 1], ShuklaEquivalance[, 2], SDI, BI, CVR, P, PaP, Kang)
         colnames(stats_df) <- c("Genotype", "Y", "S1", "Z1", "S2", "Z2", "S3", "S6", "NP1", "NP2", "NP3", "NP4", "Wricke’s ecovalence", "Shukla’s stability variance", "Deviation from regression", "Regression coefficient", "Coefficient of variance", "GE variance component", "Mean variance component", "Kang’s rank-sum")
 
         ranks_df <- getranks_df(a, b, stats_df)
 
-        output <- list(statistics = stats_df, ranks = ranks_df)
+        output <- list(statistics = stats_df, ranks = ranks_df, correlation = cor(data.matrix(stats_df[-1][, 1:length(stats_df[-1])])))
         return(output)
     }
 })()
@@ -454,3 +454,18 @@ results <- Calculator(df)
 19      G19 10 12 12 12 10   8   8  10  10                         16                                 16                        16                       6                     14                      16                     5 181 11.3125 3.591077
 20      G20  8  3  3  3  4   3   4   3   5                          2                                  2                         2                       1                      3                       2                    19  67  4.1875 4.261748
 ```
+Step 3: Plotting the correlation matrix
+-------------------
+##### 1. Install R library `ggcorrplot`
+```R
+install.packages("ggcorrplot")
+```
+##### 2. Load library `ggcorrplot`
+```R
+library("ggcorrplot")
+```
+##### 3. Plot the heatmap for pearson's correlation matrix available in `results$correlation_matrix` variable
+```R
+ggcorrplot(results$correlation_matrix)
+```
+![Spearman correlation heatmap](https://raw.githubusercontent.com/pour-aboughadareh/STABILITYSOFT/master/Screenshot%201.jpg)
