@@ -61,13 +61,13 @@
         output <- (2 / (b * (b - 1))) * (sum / rankAvgO)
         return(output)
     }
-    ShuklaEquvalance <- function(a, b, pureMatShu)
+    ShuklaEquivalance <- function(a, b, pureMatShu)
     {
-        equvalance <- apply(pureMatShu, 1, sum)
-        equvalanceTotal <- sum(pureMatShu)
+        equivalance <- apply(pureMatShu, 1, sum)
+        equivalanceTotal <- sum(pureMatShu)
         output <- matrix(nrow = a, ncol = 2)
-        shukla <- ((a * equvalance) / ((b - 1) * (a - 2))) - ((equvalanceTotal) / ((a - 1) * (a - 2) * (b - 1)))
-        output[, 1] <- equvalance
+        shukla <- ((a * equivalance) / ((b - 1) * (a - 2))) - ((equivalanceTotal) / ((a - 1) * (a - 2) * (b - 1)))
+        output[, 1] <- equivalance
         output[, 2] <- shukla
         return(output)
     }
@@ -160,10 +160,10 @@
     }
     Kang <- function(a, b, pureMatShu, PureMatAvg)
     {
-        equvalance <- apply(pureMatShu, 1, sum)
-        equvalanceTotal <- sum(equvalance)
+        equivalance <- apply(pureMatShu, 1, sum)
+        equivalanceTotal <- sum(equivalance)
 
-        shukla <- ((a * equvalance) / ((b - 1) * (a - 2))) - ((equvalanceTotal) / ((a - 1) * (a - 2) * (b - 1)))
+        shukla <- ((a * equivalance) / ((b - 1) * (a - 2))) - ((equivalanceTotal) / ((a - 1) * (a - 2) * (b - 1)))
 
         rankAvgR <- vector()
         tmp <- sort(PureMatAvg)
@@ -192,20 +192,20 @@
     }
     P <- function(a, b, pureMatShu)
     {
-        equvalance <- apply(pureMatShu, 1, sum)
-        equvalanceTotal <- sum(equvalance)
+        equivalance <- apply(pureMatShu, 1, sum)
+        equivalanceTotal <- sum(equivalance)
 
-        shukla <- (((-1 * a) * equvalance) / ((b - 1) * (a - 2) * (a - 1))) + ((equvalanceTotal) / ((a - 2) * (b - 1)))
+        shukla <- (((-1 * a) * equivalance) / ((b - 1) * (a - 2) * (a - 1))) + ((equivalanceTotal) / ((a - 2) * (b - 1)))
 
         output <- shukla
         return(output)
     }
     PaP <- function(a, b, pureMatShu)
     {
-        equvalance <- apply(pureMatShu, 1, sum)
-        equvalanceTotal <- sum(equvalance)
+        equivalance <- apply(pureMatShu, 1, sum)
+        equivalanceTotal <- sum(equivalance)
 
-        shukla <- ((a * equvalance) / (2 * (b - 1) * (a - 1))) + ((equvalanceTotal) / (2 * (a - 2) * (b - 1)))
+        shukla <- ((a * equivalance) / (2 * (b - 1) * (a - 1))) + ((equivalanceTotal) / (2 * (a - 2) * (b - 1)))
 
         output <- shukla
         return(output)
@@ -305,7 +305,7 @@
         s3 <- s3(a, b, mat, matAvg)
         s6 <- s6(a, b, mat, matAvg)
 
-        ShuklaEquvalance <- ShuklaEquvalance(a, b, pureMatShu) # wri Shu
+        ShuklaEquivalance <- ShuklaEquivalance(a, b, pureMatShu) # wri Shu
 
         SDI <- SDI(a, b, pureMatSDI, pureMatAvgCol, pureMatTotalAvg, pureMatBI)
 
@@ -319,12 +319,12 @@
 
         PaP <- PaP(a, b, pureMatShu)
 
-        stats_df <- data.frame(table_original[, 1], Y, s1, z1, s2, z2, s3, s6, np1, np2, np3, np4, ShuklaEquvalance[, 1], ShuklaEquvalance[, 2], SDI, BI, CVR, P, PaP, Kang)
-        colnames(stats_df) <- c("Genotype", "Y", "S1", "Z1", "S2", "Z2", "S3", "S6", "NP1", "NP2", "NP3", "NP4", "Wrickes ecovalence", "Shuklas stability variance", "Deviation from regression", "Regression coefficient", "Coefficient of variance", "GE variance component", "Mean variance component", "Kangs rank-sum")
+        stats_df <- data.frame(table_original[, 1], Y, s1, z1, s2, z2, s3, s6, np1, np2, np3, np4, ShuklaEquivalance[, 1], ShuklaEquivalance[, 2], SDI, BI, CVR, P, PaP, Kang)
+        colnames(stats_df) <- c("Genotype", "Y", "S1", "Z1", "S2", "Z2", "S3", "S6", "NP1", "NP2", "NP3", "NP4", "Wricke’s ecovalence", "Shukla’s stability variance", "Deviation from regression", "Regression coefficient", "Coefficient of variance", "GE variance component", "Mean variance component", "Kang’s rank-sum")
 
         ranks_df <- getranks_df(a, b, stats_df)
 
-        output <- list(statistics = stats_df, ranks = ranks_df)
+        output <- list(statistics = stats_df, ranks = ranks_df, correlation_matrix = cor(data.matrix(stats_df[-1][, 1:length(stats_df[-1])])))
         return(output)
     }
 })()
