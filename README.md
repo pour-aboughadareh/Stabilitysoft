@@ -468,4 +468,4 @@ library("ggcorrplot")
 ```R
 ggcorrplot(results$correlation_matrix, colors=c("#26fc06", "#ffff0a", "#ff2607"))
 ```
-![Spearman correlation heatmap](https://raw.githubusercontent.com/pour-aboughadareh/STABILITYSOFT/master/Screenshot%201.jpg)
+![Spearman correlation heatmap](https://raw.githubusercontent.com/pour-aboughadareh/STABILITYSOFT/master/Screenshot%202.jpg)
