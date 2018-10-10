@@ -68,7 +68,7 @@ To get started, execute the library code ([STABILITYSOFT.R](STABILITYSOFT.R)) in
             for (j in 1:b)
                 for (k in j:b)
                     sum[i] <- sum[i] + abs(mat[i, j] - mat[i, k])
-        output <- (2 / (b * (b - 1))) * (sum / rankAvgO)
+                output <- (2 / (b * (b - 1))) * (sum / rankAvgO)
         return(output)
     }
     ShuklaEquivalance <- function(a, b, pureMatShu)
@@ -89,7 +89,7 @@ To get started, execute the library code ([STABILITYSOFT.R](STABILITYSOFT.R)) in
             for (j in 1:b)
                 for (k in j:b)
                     sum[i] <- sum[i] + abs(floor(mat[i, j] - mat[i, k]))
-        output <- (((2 / (b * (b - 1))) * sum) - eS1) ^ 2 / varS1
+                output <- (((2 / (b * (b - 1))) * sum) - eS1) ^ 2 / varS1
         return(output)
     }
     z2 <- function(a, b, mat, matAvg, eS2, varS2)
@@ -107,7 +107,7 @@ To get started, execute the library code ([STABILITYSOFT.R](STABILITYSOFT.R)) in
             for (j in 1:b)
                 for (k in j:b)
                     sum[i] <- sum[i] + abs(floor(mat[i, j] - mat[i, k]))
-        output <- (2 / (b * (b - 1))) * sum
+                output <- (2 / (b * (b - 1))) * sum
         return(output)
     }
     s2 <- function(a, b, mat, matAvg)
@@ -334,7 +334,7 @@ To get started, execute the library code ([STABILITYSOFT.R](STABILITYSOFT.R)) in
 
         ranks_df <- getranks_df(a, b, stats_df)
 
-        output <- list(statistics = stats_df, ranks = ranks_df, correlation_matrix = cor(data.matrix(stats_df[-1][, 1:length(stats_df[-1])])))
+        output <- list(statistics = stats_df, ranks = ranks_df, correlation_matrix = cor(data.matrix(stats_df[c(-1,-4,-6)][, 1:(length(stats_df[c(-1)])-2)])))
         return(output)
     }
 })()
