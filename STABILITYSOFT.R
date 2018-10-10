@@ -324,7 +324,7 @@
 
         ranks_df <- getranks_df(a, b, stats_df)
 
-        output <- list(statistics = stats_df, ranks = ranks_df, correlation_matrix = cor(data.matrix(stats_df[-1][, 1:length(stats_df[-1])])))
+        output <- list(statistics = stats_df, ranks = ranks_df, correlation_matrix = cor(data.matrix(stats_df[c(-1,-4,-6)][, 1:(length(stats_df[c(-1)])-2)])))
         return(output)
     }
 })()
