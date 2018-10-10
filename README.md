@@ -17,28 +17,39 @@ To get started, execute the library code ([STABILITYSOFT.R](STABILITYSOFT.R)) in
 ##   Mohsen Yousefian (contact@mohsenyousefian.com)
 ##
 ##########################
-##
+##   
 ##   Usage:
-##
-##
+##   
+##   
 ##   1. load table data to a dataframe variable named "df"
 ##   2. results <- Calculate(df)
 ##   3. print(results$statistics)
 ##   4. print(results$ranks)
-##
+##   
 ##########################
+##  
+##  np1,np2,np3,np4: Thennarasu’s non-parametric statistics
+##  
+##  ShuklaEquivalance: Shukla’s stability variance
+##  
+##  z1,z2: Huehn’s and Nassar and Huehn’s non-parametric statistics
+##  
+##  BI: Regression coefficient
+##  
+##  SDI: Deviation from regression
+##  
+##  CVR: Coefficient of variance
+##  
+##  Kang: Kang’s rank-sum
+##  
+##  P: Plaisted’s GE variance component
+##  
+##  PaP: Plaisted and Peterson’s mean variance component
+##  
+###########################
 
 (init <- function()
 {
-    BPJ <- function(a, b, pureMatBPJ, pureMatAvgCol, pureMatTotalAvg)
-    {
-        powAvg <- apply((pureMatAvgCol - pureMatTotalAvg) ^ 2, 1, sum)
-        powAvgTotal <- sum(powAvg)
-        sum <- apply(pureMatBPJ, 1, sum)
-
-        output <- sum / powAvgTotal
-        return(output)
-    }
     np1 <- function(a, b, mat, rankMid)
     {
         mat = abs(mat - rankMid)
@@ -150,20 +161,7 @@ To get started, execute the library code ([STABILITYSOFT.R](STABILITYSOFT.R)) in
     }
     CVR <- function(a, b, pureMatSDI, pureMatCVR, pureMatAvgCol, pureMatAvg, pureMatTotalAvg, pureMatBI, pureMatBPJ, pureMat)
     {
-        # calculate bi
-        bFWT <- BI(a, b, pureMatBI, pureMatAvgCol, pureMatTotalAvg)
-        bPJT <- BPJ(a, b, pureMatBPJ, pureMatAvgCol, pureMatTotalAvg)
-
-        t <- (pureMatAvgCol - pureMatTotalAvg) ^ 2
-        d <- (pureMat - pureMatAvg) ^ 2
-
-        # calculate sumCVR & sumSDI & sumXbi
         sumSDI <- apply(pureMatSDI, 1, sum)
-        sumCVR <- apply(pureMatCVR, 1, sum)
-        sumXbFW <- bFWT ^ 2 * sumCVR
-        sumXbPJ <- bPJT ^ 2 * sumCVR
-        RFW <- bFWT * t / d
-        RPJ <- bPJT * t / d
         CV <- ((sqrt(sumSDI / (b - 1))) / pureMatAvg) * 100
         output <- CV
         return(output)
@@ -239,20 +237,21 @@ To get started, execute the library code ([STABILITYSOFT.R](STABILITYSOFT.R)) in
         colnames(Y) <- c("Y")
 
 
-
         ranks <- cbind(Y, ranks)
 
+        # Sum Rank
         SR <- data.frame(apply(ranks, 1, sum))
         colnames(SR) <- "SR"
 
+        # Average Rank
         AR <- SR / length(ranks)
         colnames(AR) <- "AR"
 
+        # Standard deviation
         STD <- data.frame(apply(ranks, 1, sd))
         colnames(STD) <- "Std."
 
         ranks <- cbind(df_orig[1], ranks, SR, AR, STD)
-
 
         return(ranks)
     }
@@ -261,12 +260,12 @@ To get started, execute the library code ([STABILITYSOFT.R](STABILITYSOFT.R)) in
         table <- cbind(table_original)[, -1]
         a <- nrow(table)
         b <- ncol(table)
-        K <- a
-        N <- b
-        eS1 <- ((K * K) - 1) / (3 * K)
-        varS1 <- (((K * K) - 1) * (((K * K) - 4) * (N + 3) + 30)) / (45 * K * K * N * (N - 1))
-        eS2 <- ((K * K) - 1) / 12
-        varS2 <- (((K * K) - 1) * (2 * ((K * K) - 4) * (N - 1) + (5 * ((K * K) - 1)))) / (360 * N * (N - 1))
+
+
+        eS1 <- ((a * a) - 1) / (3 * a)
+        varS1 <- (((a * a) - 1) * (((a * a) - 4) * (b + 3) + 30)) / (45 * a * a * b * (b - 1))
+        eS2 <- ((a * a) - 1) / 12
+        varS2 <- (((a * a) - 1) * (2 * ((a * a) - 4) * (b - 1) + (5 * ((a * a) - 1)))) / (360 * b * (b - 1))
 
         pureMat <- data.matrix(table)
 
@@ -281,7 +280,6 @@ To get started, execute the library code ([STABILITYSOFT.R](STABILITYSOFT.R)) in
         pureMatBI <- (pureMat - pureMatAvg) * (pureMatAvgCol - pureMatTotalAvg)
 
         pureMatBPJ <- (pureMat - pureMatAvg - pureMatAvgCol + pureMatTotalAvg) * (pureMatAvgCol - pureMatTotalAvg)
-        BJP <- BPJ(a, b, pureMatBPJ, pureMatAvgCol, pureMatTotalAvg)
 
         pureMatSDI <- (pureMat - pureMatAvg) ^ 2
 
