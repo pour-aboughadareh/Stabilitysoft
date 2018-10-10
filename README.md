@@ -401,7 +401,7 @@ The table data in `df` variable should now look like the following:
 
 #### 1. Use `Calculator` function to get the output
 ```R
-results <- Calculator(df)
+results <- Calculate(df)
 ```
 #### 2. Get the output values available in `results` variable (`results$statistics` and `results$ranks`)
 ```R
@@ -466,6 +466,6 @@ library("ggcorrplot")
 ```
 ##### 3. Plot the heatmap for pearson's correlation matrix available in `results$correlation_matrix` variable
 ```R
-ggcorrplot(results$correlation_matrix)
+ggcorrplot(results$correlation_matrix, colors=c("#26fc06", "#ffff0a", "#ff2607"))
 ```
 ![Spearman correlation heatmap](https://raw.githubusercontent.com/pour-aboughadareh/STABILITYSOFT/master/Screenshot%201.jpg)
