@@ -58,7 +58,7 @@
             for (j in 1:b)
                 for (k in j:b)
                     sum[i] <- sum[i] + abs(mat[i, j] - mat[i, k])
-        output <- (2 / (b * (b - 1))) * (sum / rankAvgO)
+                output <- (2 / (b * (b - 1))) * (sum / rankAvgO)
         return(output)
     }
     ShuklaEquivalance <- function(a, b, pureMatShu)
@@ -79,7 +79,7 @@
             for (j in 1:b)
                 for (k in j:b)
                     sum[i] <- sum[i] + abs(floor(mat[i, j] - mat[i, k]))
-        output <- (((2 / (b * (b - 1))) * sum) - eS1) ^ 2 / varS1
+                output <- (((2 / (b * (b - 1))) * sum) - eS1) ^ 2 / varS1
         return(output)
     }
     z2 <- function(a, b, mat, matAvg, eS2, varS2)
@@ -97,7 +97,7 @@
             for (j in 1:b)
                 for (k in j:b)
                     sum[i] <- sum[i] + abs(floor(mat[i, j] - mat[i, k]))
-        output <- (2 / (b * (b - 1))) * sum
+                output <- (2 / (b * (b - 1))) * sum
         return(output)
     }
     s2 <- function(a, b, mat, matAvg)
