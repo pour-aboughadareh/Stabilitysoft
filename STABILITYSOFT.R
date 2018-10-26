@@ -1,4 +1,4 @@
-##########################
+#########################################################################################################
 ##
 ##   STABILITYSOFT: a new online program to calculate parametric and non-parametric stability statistics
 ##   
@@ -6,23 +6,34 @@
 ##   Alireza Pour-Aboughadareh (a.poraboghadareh@gmail.com)
 ##   Mohsen Yousefian (contact@mohsenyousefian.com)
 ##
-##########################
+#########################################################################################################
 ##   
 ##   Usage:
 ##   
 ##   
 ##   1. load table data to a dataframe variable named "df"
+##   
+##   If you have average matrix:
+##
 ##   2. results <- Calculate(df)
 ##   3. print(results$statistics)
 ##   4. print(results$ranks)
 ##   
-##########################
+##   Or, if you have raw data:
+##
+##   2. results <- CalculateRaw(df)
+##   3. print(results$enviroments)
+##   4. print(results$average_matrix)
+##   5. print(results$statistics)
+##   6. print(results$ranks)
+##   
+#########################################################################################################
 ##  
-##  np1,np2,np3,np4: Thennarasu’s non-parametric statistics
+##  np1, np2, np3, np4: Thennarasu’s non-parametric statistics
 ##  
 ##  ShuklaEquivalance: Shukla’s stability variance
 ##  
-##  z1,z2: Huehn’s and Nassar and Huehn’s non-parametric statistics
+##  z1, z2: Huehn’s and Nassar and Huehn’s non-parametric statistics
 ##  
 ##  BI: Regression coefficient
 ##  
@@ -36,20 +47,20 @@
 ##  
 ##  PaP: Plaisted and Peterson’s mean variance component
 ##  
-###########################
+#########################################################################################################
 
 (init <- function()
 {
     np1 <- function(a, b, mat, rankMid)
     {
-        mat = abs(mat - rankMid)
+        mat <- abs(mat - rankMid)
         sum <- apply(mat, 1, sum)
         output <- sum / b
         return(output)
     }
     np2 <- function(a, b, mat, rankMid, rankMidO)
     {
-        mat = abs((mat - rankMid) / rankMidO)
+        mat <- abs((mat - rankMid) / rankMidO)
         sum <- apply(mat, 1, sum)
         output <- sum / b
         return(output)
@@ -69,7 +80,7 @@
             for (j in 1:b)
                 for (k in j:b)
                     sum[i] <- sum[i] + abs(mat[i, j] - mat[i, k])
-                output <- (2 / (b * (b - 1))) * (sum / rankAvgO)
+        output <- (2 / (b * (b - 1))) * (sum / rankAvgO)
         return(output)
     }
     ShuklaEquivalance <- function(a, b, pureMatShu)
@@ -90,44 +101,44 @@
             for (j in 1:b)
                 for (k in j:b)
                     sum[i] <- sum[i] + abs(floor(mat[i, j] - mat[i, k]))
-                output <- (((2 / (b * (b - 1))) * sum) - eS1) ^ 2 / varS1
+        output <- (((2 / (b * (b - 1))) * sum) - eS1) ^ 2 / varS1
         return(output)
     }
     z2 <- function(a, b, mat, matAvg, eS2, varS2)
     {
-        mat = pmax(mat, 0)
+        mat <- pmax(mat, 0)
         sum <- apply((mat - matAvg) ^ 2, 1, sum)
         output <- (((sum / (b - 1)) - eS2) ^ 2) / varS2
         return(output)
     }
     s1 <- function(a, b, mat)
     {
-        mat = pmax(mat, 0)
+        mat <- pmax(mat, 0)
         sum <- vector(length = a)
         for (i in 1:a)
             for (j in 1:b)
                 for (k in j:b)
                     sum[i] <- sum[i] + abs(floor(mat[i, j] - mat[i, k]))
-                output <- (2 / (b * (b - 1))) * sum
+        output <- (2 / (b * (b - 1))) * sum
         return(output)
     }
     s2 <- function(a, b, mat, matAvg)
     {
-        mat = pmax(mat, 0)
+        mat <- pmax(mat, 0)
         sum <- apply((mat - matAvg) ^ 2, 1, sum)
         output <- sum / (b - 1)
         return(output)
     }
     s3 <- function(a, b, mat, matAvg)
     {
-        mat = pmax(mat, 0)
+        mat <- pmax(mat, 0)
         sum <- apply((mat - matAvg) ^ 2, 1, sum)
         output <- sum / matAvg
         return(output)
     }
     s6 <- function(a, b, mat, matAvg)
     {
-        mat = pmax(mat, 0)
+        mat <- pmax(mat, 0)
         sum <- apply(abs(mat - matAvg), 1, sum)
         output <- sum / matAvg
         return(output)
@@ -322,7 +333,81 @@
 
         ranks_df <- getranks_df(a, b, stats_df)
 
-        output <- list(statistics = stats_df, ranks = ranks_df, correlation_matrix = cor(data.matrix(stats_df[c(-1,-4,-6)][, 1:(length(stats_df[c(-1)])-2)])))
+        output <- list(statistics = stats_df, ranks = ranks_df, correlation_matrix = cor(data.matrix(stats_df[c(-1, -4, -6)][, 1:(length(stats_df[c(-1)]) - 2)])))
+        return(output)
+    }
+
+    CalculateRaw <<- function(original_table)
+    {
+        objkeys <- colnames(original_table)
+        specs_keys <- c()
+        arr_not_specs <- c("replication", "yield", "genotype")
+        for (i in 1:length(objkeys))
+        {
+            key <- objkeys[i]
+            if (!(tolower(key) %in% arr_not_specs))
+                specs_keys <- append(specs_keys, key)
+        }
+        genotypekey <- if ("genotype" %in% objkeys) "genotype" else (if ("Genotype" %in% objkeys) "Genotype" else objkeys[3])
+        yieldkey <- if ("yield" %in% objkeys) "yield" else (if ("Yield" %in% objkeys) "Yield" else objkeys[3])
+        if (length(specs_keys) < 1)
+            stop("At least one property for enviroments (location, year, ...) should be provided in input data")
+        specs_columns <- list()
+        for (i in 1:length(specs_keys))
+            specs_columns <- append(specs_columns, original_table[specs_keys[i]])
+        sorted_df <- original_table[do.call(order, specs_columns),]
+
+        genotypes_list <- list()
+        enviroments_array <- list()
+        for (i in 1:nrow(sorted_df))
+        {
+            enviroment_case <- list(as.numeric(sorted_df[i, specs_keys]))
+            if (length(intersect(enviroment_case, enviroments_array)) < 1)
+                enviroments_array <- append(enviroments_array, enviroment_case)
+
+            genotype <- sorted_df[i, genotypekey]
+            if (length(intersect(genotype, genotypes_list)) < 1)
+                genotypes_list <- append(genotypes_list, genotype)
+        }
+        enviroments <- data.frame(c(1:length(specs_keys)))
+        for (i in 1:length(enviroments_array))
+        {
+            for (j in 1:length(enviroments_array[[i]]))
+            {
+                enviroments[i, j] <- enviroments_array[[i]][j]
+            }
+        }
+        colnames(enviroments) <- specs_keys
+        rownames(enviroments) <- lapply(list(1:length(enviroments[, 1])), function(x) { return(paste0('E', as.character(x))) })[[1]]
+        sum_matrix <- data.frame(matrix(0, ncol = length(enviroments[, 1]), nrow = length(genotypes_list)))
+        colnames(sum_matrix) <- rownames(enviroments)
+        counter_matrix <- data.frame(sum_matrix)
+        specs_keys_count <- length(specs_keys)
+        for (i in 1:nrow(original_table))
+        {
+            row_data <- original_table[i,]
+            target_specs <- list()
+            for (key in specs_keys)
+                target_specs <- append(target_specs, as.numeric(row_data[key]))
+            enviroment_index <- 0
+            for (i in 1:nrow(enviroments))
+            {
+                enviroment <- enviroments[i,]
+                if (all(as.numeric(enviroment) == as.numeric(target_specs)))
+                {
+                    enviroment_index <- i
+                    break
+                }
+            }
+            genotype_index <- which(as.character(row_data[genotypekey]) == genotypes_list)
+
+            counter_matrix[genotype_index, enviroment_index] <- counter_matrix[genotype_index, enviroment_index] + 1;
+            sum_matrix[genotype_index, enviroment_index] <- sum_matrix[genotype_index, enviroment_index] + as.numeric(row_data[yieldkey])
+        }
+        average_matrix <- sum_matrix / counter_matrix
+        average_matrix <- cbind(Genotype = as.array(genotypes_list), average_matrix)
+        calc_results <- Calculate(average_matrix)
+        output <- list(average_matrix = average_matrix, enviroments = enviroments, statistics = calc_results$statistics, ranks = calc_results$ranks, correlation_matrix = calc_results$correlation_matrix)
         return(output)
     }
 })()
