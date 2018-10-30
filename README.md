@@ -429,7 +429,7 @@ It takes a dataframe as input and returns the result as an object containing dat
 
 First, you need to convert your data to a dataframe (given that the data is already like examples provided [here](Examples.zip)).
 
-**NOTE: Example1.xlsx to Example4.xlsx are average matrixes and Example5.xlsx is raw data.**
+**NOTE: Examples 1-4 are average matrixes and Example 5 is raw data.**
 
 ### Option 1: Copy data from your favorite app and get it from clipboard
 
