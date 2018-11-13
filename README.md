@@ -424,8 +424,8 @@ To get started, execute the library code ([STABILITYSOFT.R](STABILITYSOFT.R)) in
 ```
 Step 2: Loading the data
 --------------------
-After execution, function `Calculator` can be used to get the results.
-It takes a dataframe as input and returns the result as an object containing dataframes `result$statistics` and `result$ranks`.
+After execution, functions `Calculate` and `CalculateRaw` can be used to get the results.
+These functions take a dataframe as input and return the results as an object.
 
 First, you need to convert your data to a dataframe (given that the data is already like examples provided [here](Examples.zip)).
 
