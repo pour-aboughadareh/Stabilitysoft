@@ -43,13 +43,13 @@ To get started, execute the library code ([STABILITYSOFT.R](STABILITYSOFT.R)) in
 ##  
 ##  ShuklaEquivalance: Shukla’s stability variance
 ##  
-##  z1, z2: Huehn’s and Nassar and Huehn’s non-parametric statistics
+##  s1, s2, s3, s6, z1, z2: Huhn’s and Nassar and Huhn’s non-parametric statistics
 ##  
 ##  BI: Regression coefficient
 ##  
 ##  SDI: Deviation from regression
 ##  
-##  CVR: Coefficient of variance
+##  CVI: Coefficient of variance
 ##  
 ##  Kang: Kang’s rank-sum
 ##  
@@ -170,7 +170,7 @@ To get started, execute the library code ([STABILITYSOFT.R](STABILITYSOFT.R)) in
         output <- ((sum) - ((bi * bi) * powAvgTotal)) / 7
         return(output)
     }
-    CVR <- function(a, b, pureMatSDI, pureMatCVR, pureMatAvgCol, pureMatAvg, pureMatTotalAvg, pureMatBI, pureMatBPJ, pureMat)
+    CVI <- function(a, b, pureMatSDI, pureMatCVI, pureMatAvgCol, pureMatAvg, pureMatTotalAvg, pureMatBI, pureMatBPJ, pureMat)
     {
         sumSDI <- apply(pureMatSDI, 1, sum)
         CV <- ((sqrt(sumSDI / (b - 1))) / pureMatAvg) * 100
@@ -294,7 +294,7 @@ To get started, execute the library code ([STABILITYSOFT.R](STABILITYSOFT.R)) in
 
         pureMatSDI <- (pureMat - pureMatAvg) ^ 2
 
-        pureMatCVR <- (pureMat - pureMatTotalAvg) ^ 2
+        pureMatCVI <- (pureMat - pureMatTotalAvg) ^ 2
 
 
         mat <- apply(pureMat, 2, rank, ties.method = "min")
@@ -330,7 +330,7 @@ To get started, execute the library code ([STABILITYSOFT.R](STABILITYSOFT.R)) in
 
         BI <- BI(a, b, pureMatBI, pureMatAvgCol, pureMatTotalAvg)
 
-        CVR <- CVR(a, b, pureMatSDI, pureMatCVR, pureMatAvgCol, pureMatAvg, pureMatTotalAvg, pureMatBI, pureMatBPJ, pureMat)
+        CVI <- CVI(a, b, pureMatSDI, pureMatCVI, pureMatAvgCol, pureMatAvg, pureMatTotalAvg, pureMatBI, pureMatBPJ, pureMat)
 
         Kang <- Kang(a, b, pureMatShu, pureMatAvg)
 
@@ -338,7 +338,7 @@ To get started, execute the library code ([STABILITYSOFT.R](STABILITYSOFT.R)) in
 
         PaP <- PaP(a, b, pureMatShu)
 
-        stats_df <- data.frame(table_original[, 1], Y, s1, z1, s2, z2, s3, s6, np1, np2, np3, np4, ShuklaEquivalance[, 1], ShuklaEquivalance[, 2], SDI, BI, CVR, P, PaP, Kang)
+        stats_df <- data.frame(table_original[, 1], Y, s1, z1, s2, z2, s3, s6, np1, np2, np3, np4, ShuklaEquivalance[, 1], ShuklaEquivalance[, 2], SDI, BI, CVI, P, PaP, Kang)
         colnames(stats_df) <- c("Genotype", "Y", "S1", "Z1", "S2", "Z2", "S3", "S6", "NP1", "NP2", "NP3", "NP4", "Wricke’s ecovalence", "Shukla’s stability variance", "Deviation from regression", "Regression coefficient", "Coefficient of variance", "GE variance component", "Mean variance component", "Kang’s rank-sum")
 
         ranks_df <- getranks_df(a, b, stats_df)
