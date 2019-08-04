@@ -256,8 +256,18 @@
 
         return(ranks)
     }
+    validateTable <- function(df, rawData)
+    {
+        hasNanInDataFrame <- any(apply(df, 2, function(x) any(is.na(x) | is.infinite(x))))
+        if(hasNanInDataFrame)
+        {
+            stop("Missing data: A value with non-numeric/infinite value was found in the data frame.")
+        }
+    }
     Calculate <<- function(table_original)
     {
+        validateTable(table_original, FALSE)
+
         table <- cbind(table_original)[, -1]
         a <- nrow(table)
         b <- ncol(table)
@@ -339,6 +349,8 @@
 
     CalculateRaw <<- function(original_table)
     {
+        validateTable(table_original, TRUE)
+
         objkeys <- colnames(original_table)
         specs_keys <- c()
         arr_not_specs <- c("replication", "yield", "genotype")
