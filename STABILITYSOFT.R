@@ -1,24 +1,24 @@
 #########################################################################################################
 ##
 ##   STABILITYSOFT: a new online program to calculate parametric and non-parametric stability statistics
-##   
+##
 ##   Authors:
 ##   Alireza Pour-Aboughadareh (a.poraboghadareh@gmail.com)
 ##   Mohsen Yousefian (contact@mohsenyousefian.com)
 ##
 #########################################################################################################
-##   
+##
 ##   Usage:
-##   
-##   
+##
+##
 ##   1. load table data to a dataframe variable named "df"
-##   
+##
 ##   If you have average matrix:
 ##
 ##   2. results <- Calculate(df)
 ##   3. print(results$statistics)
 ##   4. print(results$ranks)
-##   
+##
 ##   Or, if you have raw data:
 ##
 ##   2. results <- CalculateRaw(df)
@@ -26,27 +26,27 @@
 ##   4. print(results$average_matrix)
 ##   5. print(results$statistics)
 ##   6. print(results$ranks)
-##   
+##
 #########################################################################################################
-##  
+##
 ##  np1, np2, np3, np4: Thennarasu’s non-parametric statistics
-##  
+##
 ##  ShuklaEquivalance: Shukla’s stability variance
-##  
+##
 ##  s1, s2, s3, s6, z1, z2: Huhn’s and Nassar and Huhn’s non-parametric statistics
-##  
+##
 ##  BI: Regression coefficient
-##  
+##
 ##  SDI: Deviation from regression
-##  
+##
 ##  CVI: Coefficient of variance
-##  
+##
 ##  Kang: Kang’s rank-sum
-##  
+##
 ##  P: Plaisted’s GE variance component
-##  
+##
 ##  PaP: Plaisted and Peterson’s mean variance component
-##  
+##
 #########################################################################################################
 
 (init <- function()
@@ -70,7 +70,7 @@
         mat <- (mat - rankAvg) ^ 2 / b
         sum <- apply(mat, 1, sum)
         output <- sqrt(sum) / rankAvgO
-        return(output);
+        return(output)
     }
     np4 <- function(a, b, mat, rankAvgO)
     {
@@ -149,7 +149,7 @@
         powAvgTotal <- sum(powAvg)
         sum <- apply(pureMatBI, 1, sum)
         output <- sum / powAvgTotal
-        return(output);
+        return(output)
     }
     SDI <- function(a, b, pureMatSDI, pureMatAvgCol, pureMatTotalAvg, pureMatBI)
     {
@@ -401,7 +401,7 @@
             }
             genotype_index <- which(as.character(row_data[genotypekey]) == genotypes_list)
 
-            counter_matrix[genotype_index, enviroment_index] <- counter_matrix[genotype_index, enviroment_index] + 1;
+            counter_matrix[genotype_index, enviroment_index] <- counter_matrix[genotype_index, enviroment_index] + 1
             sum_matrix[genotype_index, enviroment_index] <- sum_matrix[genotype_index, enviroment_index] + as.numeric(row_data[yieldkey])
         }
         average_matrix <- sum_matrix / counter_matrix
